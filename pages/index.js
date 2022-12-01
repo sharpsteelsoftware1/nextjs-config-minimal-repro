@@ -1,8 +1,11 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import config from 'config'
+import { useEffect } from 'react'
 
-export default function Home() {
+export default function Home(props) {
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,7 +16,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          {props.helloConfig}
         </h1>
 
         <p className={styles.description}>
@@ -68,4 +71,11 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  const helloConfig = config.get('hello')
+  return {
+    props: {helloConfig}, 
+  }
 }
